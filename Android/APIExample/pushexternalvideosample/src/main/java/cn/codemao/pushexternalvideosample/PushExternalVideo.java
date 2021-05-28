@@ -1,6 +1,7 @@
 package cn.codemao.pushexternalvideosample;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.opengl.EGLSurface;
@@ -26,6 +27,8 @@ import androidx.annotation.Nullable;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import io.agora.api.component.gles.ProgramTextureOES;
@@ -36,6 +39,7 @@ import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 import io.agora.rtc.models.ChannelMediaOptions;
 import io.agora.rtc.video.AgoraVideoFrame;
+import io.agora.rtc.video.GLTextureView;
 import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
@@ -169,6 +173,7 @@ public class PushExternalVideo extends BaseFragment implements View.OnClickListe
         }
     }
 
+    TextureView textureView;
     private void joinChannel(String channelId) {
 //        engine.setParameters("{\"rtc.log_filter\":65535}");
         // Check if the context is valid
@@ -178,7 +183,7 @@ public class PushExternalVideo extends BaseFragment implements View.OnClickListe
         }
 
         // Create render view by RtcEngine
-        TextureView textureView = new TextureView(getContext());
+        textureView = new TextureView(getContext());
         //add SurfaceTextureListener
         textureView.setSurfaceTextureListener(this);
         // Add to the local container
@@ -378,6 +383,14 @@ public class PushExternalVideo extends BaseFragment implements View.OnClickListe
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         Log.d(TAG, "onSurfaceTextureUpdated: ");
+        // 验证是否能正常获取到截图，保存逻辑应放在IO线程处理，不然会卡住主线程
+        if (textureView != null && textureView.isAvailable()) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            textureView.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, baos);
+            FileIOUtils.writeFileFromBytesByStream(new File(getContext().getFilesDir().getAbsolutePath() + "/" + System.currentTimeMillis()  + ".png"),
+                    baos.toByteArray());
+            Log.d(TAG, "onSurfaceTextureSizeChanged: " + getContext().getFilesDir().getAbsolutePath());
+        }
     }
 
     /**
