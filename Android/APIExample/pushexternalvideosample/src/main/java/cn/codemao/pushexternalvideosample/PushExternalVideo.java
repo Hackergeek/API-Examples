@@ -1,4 +1,4 @@
-package io.agora.api.example.examples.advanced;
+package cn.codemao.pushexternalvideosample;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
@@ -30,11 +31,6 @@ import java.io.IOException;
 import io.agora.api.component.gles.ProgramTextureOES;
 import io.agora.api.component.gles.core.EglCore;
 import io.agora.api.component.gles.core.GlUtil;
-import io.agora.api.example.MainApplication;
-import io.agora.api.example.R;
-import io.agora.api.example.annotation.Example;
-import io.agora.api.example.common.BaseFragment;
-import io.agora.api.example.utils.CommonUtil;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
@@ -43,17 +39,9 @@ import io.agora.rtc.video.AgoraVideoFrame;
 import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
-import static io.agora.api.example.common.model.Examples.ADVANCED;
 import static io.agora.rtc.video.VideoCanvas.RENDER_MODE_HIDDEN;
 import static io.agora.rtc.video.VideoEncoderConfiguration.STANDARD_BITRATE;
 
-@Example(
-        index = 5,
-        group = ADVANCED,
-        name = R.string.item_pushexternal,
-        actionId = R.id.action_mainFragment_to_PushExternalVideo,
-        tipsId = R.string.pushexternalvideo
-)
 public class PushExternalVideo extends BaseFragment implements View.OnClickListener, TextureView.SurfaceTextureListener,
         SurfaceTexture.OnFrameAvailableListener {
     private static final String TAG = PushExternalVideo.class.getSimpleName();
@@ -367,7 +355,7 @@ public class PushExternalVideo extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
+        Log.d(TAG, "onSurfaceTextureSizeChanged: ");
     }
 
     @Override
@@ -389,7 +377,7 @@ public class PushExternalVideo extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
+        Log.d(TAG, "onSurfaceTextureUpdated: ");
     }
 
     /**

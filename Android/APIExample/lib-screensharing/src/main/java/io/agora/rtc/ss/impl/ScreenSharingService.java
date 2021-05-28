@@ -28,7 +28,6 @@ import io.agora.rtc.ss.gles.GLRender;
 import io.agora.rtc.ss.gles.ImgTexFrame;
 import io.agora.rtc.ss.gles.SinkConnector;
 import io.agora.rtc.video.AgoraVideoFrame;
-import io.agora.rtc.video.CameraCapturerConfiguration;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
 public class ScreenSharingService extends Service {
@@ -353,15 +352,13 @@ public class ScreenSharingService extends Service {
             case 10 :
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_10;
                 break;
-            case 15 :
-                fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15;
-                break;
             case 24 :
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_24;
                 break;
             case 30 :
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_30;
                 break;
+            case 15 :
             default :
                 fr = VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15;
                 break;
